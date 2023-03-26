@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">recycler_view_example</string>
+    <string name="user_photo">User photo</string>
+    <string name="more_button">More button</string>
+    <string name="move_up">Move Up</string>
+    <string name="move_down">Move Down</string>
+    <string name="remove">Remove</string>
 </resources>
