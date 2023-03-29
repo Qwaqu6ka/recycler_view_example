@@ -10,3 +10,8 @@ data class User(
         return name
     }
 }
+
+data class UserDetails(
+    val user: User,
+    val details: String
+)

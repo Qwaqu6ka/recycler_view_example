@@ -1,8 +1,8 @@
 package com.example.recycler_view_example.models
 
+import com.example.recycler_view_example.UserNotFoundException
 import java.util.Collections
 import com.github.javafaker.Faker
-
 
 typealias UserListener = (users: List<User>) -> Unit
 
@@ -38,6 +38,14 @@ class UserService {
         if (index == -1) return
         users.removeAt(index)
         notifyChanges()
+    }
+
+    fun getUserById(userId: Long): UserDetails {
+        val user = users.firstOrNull { it.id == userId } ?: throw UserNotFoundException()
+        return UserDetails(
+            user = user,
+            details = Faker.instance().lorem().paragraphs(3).joinToString("\n\n")
+        )
     }
 
     fun addListener(listener: UserListener) {

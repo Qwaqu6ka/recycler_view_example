@@ -1,53 +1,40 @@
 package com.example.recycler_view_example
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.recycler_view_example.databinding.ActivityMainBinding
-import com.example.recycler_view_example.models.User
-import com.example.recycler_view_example.models.UserListener
-import com.example.recycler_view_example.models.UserService
+import com.example.recycler_view_example.screens.UserDetailsFragment
+import com.example.recycler_view_example.screens.UsersListFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Navigator {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: UsersAdapter
-    private val userService: UserService
-        get() = (application as App).userService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        adapter = UsersAdapter(object : UserActionListener {
-            override fun onUserDetails(user: User) {
-                Toast.makeText(this@MainActivity, "User: ${user.name}", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onUserRemove(user: User) {
-                userService.deleteUser(user)
-            }
-
-            override fun onUserMove(user: User, moveBy: Int) {
-                userService.moveUser(user, moveBy)
-            }
-
-        })
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-
-        userService.addListener(usersListener)
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .add(binding.fragmentContainer.id, UsersListFragment())
+                .commit()
+        }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        userService.removeListener(usersListener)
+    override fun onUserDetails(userId: Long) {
+        supportFragmentManager.beginTransaction()
+            .replace(binding.fragmentContainer.id, UserDetailsFragment.getInstance(userId))
+            .addToBackStack(null)
+            .commit()
     }
 
-    private val usersListener: UserListener = {
-        adapter.users = it
+    override fun goBack() {
+        onBackPressed()
+    }
+
+    override fun toast(resId: Int) {
+        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show()
     }
 }

@@ -5,4 +5,6 @@
     <string name="move_up">Move Up</string>
     <string name="move_down">Move Down</string>
     <string name="remove">Remove</string>
+    <string name="delete">Delete</string>
+    <string name="user_has_been_deleted">User has been deleted</string>
 </resources>
