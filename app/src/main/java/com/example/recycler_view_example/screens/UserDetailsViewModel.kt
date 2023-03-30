@@ -7,17 +7,21 @@ import com.example.recycler_view_example.UserNotFoundException
 import com.example.recycler_view_example.models.UserDetails
 import com.example.recycler_view_example.models.UserService
 
-class UserDetailsViewModel(private val userService: UserService) : ViewModel() {
+class UserDetailsViewModel(private val userService: UserService, private val userId: Long) :
+    ViewModel() {
 
     private val _userDetails = MutableLiveData<UserDetails>()
     val userDetails: LiveData<UserDetails> = _userDetails
 
-    fun loadUserById(userId: Long) {
+    init {
+        loadUser()
+    }
+
+    private fun loadUser() {
         if (_userDetails.value != null) return
         try {
             _userDetails.value = userService.getUserById(userId)
-        }
-        catch (e: UserNotFoundException) {
+        } catch (e: UserNotFoundException) {
             e.printStackTrace()
         }
     }

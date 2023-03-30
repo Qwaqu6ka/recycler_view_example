@@ -6,21 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.recycler_view_example.R
 import com.example.recycler_view_example.databinding.FragmentUserDetailsBinding
-import com.example.recycler_view_example.navigator
 
 class UserDetailsFragment : Fragment() {
 
-    private val viewModel: UserDetailsViewModel by viewModels { factory() }
-    private lateinit var binding: FragmentUserDetailsBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.loadUserById(requireArguments().getLong(ARG_USER_ID))
+    private val viewModel: UserDetailsViewModel by viewModelCreator {
+        UserDetailsViewModel(it.userService, requireArguments().getLong(ARG_USER_ID))
     }
+    private lateinit var binding: FragmentUserDetailsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,

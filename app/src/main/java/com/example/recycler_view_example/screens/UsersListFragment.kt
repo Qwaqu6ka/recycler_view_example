@@ -12,7 +12,6 @@ import com.example.recycler_view_example.UserActionListener
 import com.example.recycler_view_example.UsersAdapter
 import com.example.recycler_view_example.databinding.FragmentUsersListBinding
 import com.example.recycler_view_example.models.User
-import com.example.recycler_view_example.navigator
 
 class UsersListFragment : Fragment() {
 
