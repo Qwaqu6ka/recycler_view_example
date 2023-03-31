@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recycler_view_example.UserActionListener
@@ -37,6 +38,10 @@ class UsersListFragment : Fragment() {
             override fun onUserMove(user: User, moveBy: Int) {
                 viewModel.moveUser(user, moveBy)
             }
+
+            override fun onUserFire(user: User) {
+                viewModel.fireUser(user)
+            }
         })
 
         viewModel.users.observe(viewLifecycleOwner) {
@@ -46,6 +51,10 @@ class UsersListFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = layoutManager
+
+        val itemAnimator = binding.recyclerView.itemAnimator
+        if (itemAnimator is DefaultItemAnimator)
+            itemAnimator.supportsChangeAnimations = false
 
         return binding.root
     }

@@ -7,4 +7,6 @@
     <string name="remove">Remove</string>
     <string name="delete">Delete</string>
     <string name="user_has_been_deleted">User has been deleted</string>
+    <string name="fire">Fire</string>
+    <string name="unemployed">[Unemployed]</string>
 </resources>

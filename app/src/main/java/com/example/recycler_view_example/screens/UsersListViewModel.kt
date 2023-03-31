@@ -35,4 +35,8 @@ class UsersListViewModel(private val userService: UserService) : ViewModel() {
     fun deleteUser(user: User) {
         userService.deleteUser(user)
     }
+
+    fun fireUser(user: User) {
+        userService.fireUser(user)
+    }
 }
